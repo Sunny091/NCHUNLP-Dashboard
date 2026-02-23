@@ -5,25 +5,46 @@ set -e
 echo "=== Dashboard Kiosk 安裝腳本 ==="
 echo ""
 
-# 檢測套件管理器並安裝套件
+# 檢查並安裝所需套件
 install_packages() {
-    echo "[1/3] 安裝所需套件..."
+    echo "[1/3] 檢查所需套件..."
+
+    PACKAGES_TO_INSTALL=""
+
+    # 檢查 chromium 是否已安裝
+    if command -v chromium &> /dev/null || command -v chromium-browser &> /dev/null; then
+        echo "✓ Chromium 已安裝"
+    else
+        echo "✗ Chromium 未安裝，將進行安裝"
+        PACKAGES_TO_INSTALL="chromium"
+    fi
+
+    # 檢查 wtype 是否已安裝
+    if command -v wtype &> /dev/null; then
+        echo "✓ wtype 已安裝"
+    else
+        echo "✗ wtype 未安裝，將進行安裝"
+        PACKAGES_TO_INSTALL="$PACKAGES_TO_INSTALL wtype"
+    fi
+
+    # 如果沒有需要安裝的套件，直接返回
+    if [ -z "$PACKAGES_TO_INSTALL" ]; then
+        echo "所有套件已就緒"
+        return 0
+    fi
+
+    # 安裝缺少的套件
+    echo "安裝: $PACKAGES_TO_INSTALL"
 
     if command -v apt &> /dev/null; then
-        # Debian/Ubuntu
         sudo apt update
-        sudo apt install -y chromium-browser wtype
+        sudo apt install -y $PACKAGES_TO_INSTALL
     elif command -v dnf &> /dev/null; then
-        # Fedora
-        sudo dnf install -y chromium wtype
+        sudo dnf install -y $PACKAGES_TO_INSTALL
     elif command -v pacman &> /dev/null; then
-        # Arch Linux
-        sudo pacman -S --noconfirm chromium wtype
-    elif command -v zypper &> /dev/null; then
-        # openSUSE
-        sudo zypper install -y chromium wtype
+        sudo pacman -S --noconfirm $PACKAGES_TO_INSTALL
     else
-        echo "警告: 無法識別套件管理器，請手動安裝 chromium 和 wtype"
+        echo "警告: 無法識別套件管理器，請手動安裝: $PACKAGES_TO_INSTALL"
         return 1
     fi
 
