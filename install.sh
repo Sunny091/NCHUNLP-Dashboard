@@ -74,11 +74,11 @@ install_kiosk_script() {
 
     SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 
-    # 複製腳本到 /usr/local/bin
-    sudo cp "$SCRIPT_DIR/kiodk.sh" /usr/local/bin/kiosk.sh
-    sudo chmod 755 /usr/local/bin/kiosk.sh
+    # 複製腳本到 ~/kiosk.sh
+    sudo cp "$SCRIPT_DIR/kiodk.sh" ~/kiosk.sh
+    sudo chmod 755 ~/kiosk.sh
 
-    echo "已安裝 kiosk.sh 到 /usr/local/bin/"
+    echo "已安裝 kiosk.sh 到 ~/kiosk.sh"
 }
 
 # 主程式
