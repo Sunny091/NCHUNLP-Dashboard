@@ -1,0 +1,4 @@
+[Desktop Entry]
+Type=Application
+Name=Dashboard Browser
+Exec=chromium --kiosk --noerrdialogs --disable-infobars --force-device-scale-factor=0.88 --enable-features=OverlayScrollbar --hide-scrollbars --disable-gpu --disable-software-rasterizer --disable-dev-shm-usage --disable-background-networking --disable-sync --disable-translate --disable-features=TranslateUI --no-first-run --no-default-browser-check --process-per-site --disable-extensions --js-flags="--max-old-space-size=256" http://192.168.10.100:27721/
