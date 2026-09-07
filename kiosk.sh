@@ -8,6 +8,7 @@ URL="http://192.168.10.100:27721/"
 # Chromium 啟動參數 (針對 Raspberry Pi 優化)
 CHROMIUM_FLAGS=(
     --kiosk
+    --ozone-platform=wayland
     --noerrdialogs
     --disable-infobars
     --force-device-scale-factor=0.88
